@@ -34,7 +34,9 @@ angular.module('angulartics', [])
       autoBasePath: false,
       basePath: ''
     },
-    eventTracking: {},
+    eventTracking: {
+      eventPrefix: ''
+    },
     bufferFlushDelay: 1000, // Support only one configuration for buffer flush delay to simplify buffering
     developerMode: false // Prevent sending data in local/development environment
   };
@@ -100,6 +102,7 @@ angular.module('angulartics', [])
     api: api,
     settings: settings,
     virtualPageviews: function (value) { this.settings.pageTracking.autoTrackVirtualPages = value; },
+    setEventPrefix: function(value){this.settings.eventTracking.eventPrefix = value;},
     firstPageview: function (value) { this.settings.pageTracking.autoTrackFirstPage = value; },
     withBase: function (value) { this.settings.pageTracking.basePath = (value) ? angular.element('base').attr('href').slice(0, -1) : ''; },
     withAutoBase: function (value) { this.settings.pageTracking.autoBasePath = value; },
@@ -258,6 +261,11 @@ angular.module('angulartics', [])
         if($attrs.analyticsProperties){
           angular.extend(trackingData, $scope.$eval($attrs.analyticsProperties));
         }
+
+        if($analytics.settings.eventTracking.eventPrefix !== ''){
+         eventName = $analytics.settings.eventTracking.eventPrefix + eventName;
+       }
+
         $analytics.eventTrack(eventName, trackingData);
       });
     }

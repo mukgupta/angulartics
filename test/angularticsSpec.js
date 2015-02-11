@@ -42,6 +42,28 @@ describe('Module: angulartics', function() {
     });
   });
 
+  it('events should be prefixed', function() {
+module(function(_$analyticsProvider_) {
+      _$analyticsProvider_.virtualPageviews(false);
+      _$analyticsProvider_.setEventPrefix('_hi_');
+    });
+
+  inject(function(_$analytics_, _$compile_, _$rootScope_) {
+        spyOn(_$analytics_, 'eventTrack');
+
+        var ele = angular.element('<input type="button" analytics-on="click" analytics-event="button"/>');
+       _$compile_(ele)(_$rootScope_);
+       _$rootScope_.$digest();
+
+      expect(_$analytics_.settings.eventTracking.eventPrefix).toBe('_hi_');
+
+      ele.triggerHandler('click');
+      expect(_$analytics_.eventTrack).toHaveBeenCalledWith('_hi_button', { eventType : 'click' });
+
+    });
+
+});
+
   describe('Provider: analytics', function() {
 
     describe('initialize', function() {
