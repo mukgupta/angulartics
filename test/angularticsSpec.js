@@ -55,7 +55,7 @@ module(function(_$analyticsProvider_) {
        _$compile_(ele)(_$rootScope_);
        _$rootScope_.$digest();
 
-      expect(_$analytics_.settings.eventTracking.eventPrefix).toBe('_hi_');
+      expect(_$analytics_.settings.eventPrefix).toBe('_hi_');
 
       ele.triggerHandler('click');
       expect(_$analytics_.eventTrack).toHaveBeenCalledWith('_hi_button', { eventType : 'click' });
