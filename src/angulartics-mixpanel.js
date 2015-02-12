@@ -53,7 +53,7 @@ angular.module('angulartics.mixpanel', ['angulartics'])
 
   angulartics.waitForVendorApi('mixpanel', 500, '__loaded', function (mixpanel) {
     $analyticsProvider.registerPageTrack(function (path) {
-      mixpanel.track( "Page Viewed", { "page": path } );
+      mixpanel.track( $analyticsProvider.settings.eventPrefix + "Page Viewed", { "page": path } );
     });
   });
 
