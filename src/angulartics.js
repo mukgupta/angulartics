@@ -181,7 +181,7 @@ angular.module('angulartics', [])
       }
       if ($injector.has('$route')) {
         $rootScope.$on('$routeChangeSuccess', function (event, current) {
-          if (current && (current.$$route||current).redirectTo) return;
+          if (current && (current.$$route||current).redirectTo) { return; }
           var url = $analytics.settings.pageTracking.basePath + $location.url();
           $analytics.pageTrack(url, $location);
         });
@@ -210,12 +210,12 @@ angular.module('angulartics', [])
   }
 
   function inferEventType(element) {
-    if (isCommand(element)) return 'click';
+    if (isCommand(element)) { return 'click'; }
     return 'click';
   }
 
   function inferEventName(element) {
-    if (isCommand(element)) return element.innerText || element.value;
+    if (isCommand(element)) { return element.innerText || element.value; }
     return element.id || element.name || element.tagName;
   }
 
